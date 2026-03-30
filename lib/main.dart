@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/home_screen.dart';
 import 'services/notification_service.dart';
+import 'services/premium_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize notifications
   await NotificationService.instance.initialize();
+
+  // Initialize in-app purchases
+  await PremiumService.instance.initialize();
 
   runApp(const ThreeQuestionJournal());
 }

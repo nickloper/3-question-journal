@@ -25,6 +25,9 @@ dependencies:
   # Date handling
   intl: ^0.19.0
 
+  # In-app purchases
+  in_app_purchase: ^3.1.13
+
   # UI
   google_fonts: ^6.1.0
   flutter_launcher_icons: ^0.13.1
