@@ -1,0 +1,29 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient background (darker, evening theme) -->
+  <defs>
+    <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A3B6B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6B5B95;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded square background -->
+  <rect width="512" height="512" rx="115" fill="url(#grad4)"/>
+
+  <!-- Crescent moon -->
+  <circle cx="256" cy="200" r="100" fill="white" opacity="0.95"/>
+  <circle cx="290" cy="180" r="90" fill="#4A3B6B"/>
+
+  <!-- Three small stars -->
+  <circle cx="150" cy="130" r="12" fill="white" opacity="0.9"/>
+  <circle cx="380" cy="150" r="10" fill="white" opacity="0.8"/>
+  <circle cx="340" cy="290" r="8" fill="white" opacity="0.7"/>
+
+  <!-- Small "3" on the moon -->
+  <text x="235" y="230" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="#6B5B95" text-anchor="middle">3</text>
+
+  <!-- Journal lines at bottom -->
+  <rect x="140" y="350" width="232" height="8" rx="4" fill="white" opacity="0.6"/>
+  <rect x="140" y="380" width="200" height="8" rx="4" fill="white" opacity="0.5"/>
+  <rect x="140" y="410" width="180" height="8" rx="4" fill="white" opacity="0.4"/>
+</svg>

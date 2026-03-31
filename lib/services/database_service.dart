@@ -20,8 +20,9 @@ class DatabaseService {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _createDB,
+      onUpgrade: _upgradeDB,
     );
   }
 
@@ -34,9 +35,21 @@ class DatabaseService {
         grateful TEXT NOT NULL,
         winTomorrow TEXT NOT NULL,
         createdAt TEXT NOT NULL,
-        updatedAt TEXT
+        updatedAt TEXT,
+        accomplishedPhotos TEXT,
+        gratefulPhotos TEXT,
+        winTomorrowPhotos TEXT
       )
     ''');
+  }
+
+  Future _upgradeDB(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      // Add photo columns
+      await db.execute('ALTER TABLE entries ADD COLUMN accomplishedPhotos TEXT');
+      await db.execute('ALTER TABLE entries ADD COLUMN gratefulPhotos TEXT');
+      await db.execute('ALTER TABLE entries ADD COLUMN winTomorrowPhotos TEXT');
+    }
   }
 
   // Create or update entry

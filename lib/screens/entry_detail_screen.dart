@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/journal_entry.dart';
@@ -191,6 +192,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen> {
               number: '1',
               question: 'What did I get done today?',
               controller: _accomplishedController,
+              photos: widget.entry.accomplishedPhotos,
             ),
             const SizedBox(height: 16),
 
@@ -198,6 +200,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen> {
               number: '2',
               question: 'What am I grateful for?',
               controller: _gratefulController,
+              photos: widget.entry.gratefulPhotos,
             ),
             const SizedBox(height: 16),
 
@@ -205,6 +208,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen> {
               number: '3',
               question: 'How will I win tomorrow?',
               controller: _winTomorrowController,
+              photos: widget.entry.winTomorrowPhotos,
             ),
 
             // Save button when editing
@@ -239,6 +243,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen> {
     required String number,
     required String question,
     required TextEditingController controller,
+    List<String> photos = const [],
   }) {
     return Card(
       child: Padding(
@@ -307,6 +312,36 @@ class _EntryDetailScreenState extends State<EntryDetailScreen> {
                       ),
                 ),
               ),
+            // Display photos
+            if (photos.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: photos.map((photoPath) {
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.file(
+                      File(photoPath),
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(Icons.broken_image, color: Colors.grey),
+                        );
+                      },
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
           ],
         ),
       ),

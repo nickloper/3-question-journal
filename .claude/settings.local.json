@@ -7,7 +7,9 @@
       "Bash(git branch:*)",
       "Bash(git push:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(flutter pub get:*)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": [],
     "ask": []

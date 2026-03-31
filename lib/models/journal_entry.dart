@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class JournalEntry {
   final int? id;
   final DateTime date;
@@ -6,6 +8,9 @@ class JournalEntry {
   final String winTomorrow;
   final DateTime createdAt;
   final DateTime? updatedAt;
+  final List<String> accomplishedPhotos;
+  final List<String> gratefulPhotos;
+  final List<String> winTomorrowPhotos;
 
   JournalEntry({
     this.id,
@@ -15,6 +20,9 @@ class JournalEntry {
     required this.winTomorrow,
     required this.createdAt,
     this.updatedAt,
+    this.accomplishedPhotos = const [],
+    this.gratefulPhotos = const [],
+    this.winTomorrowPhotos = const [],
   });
 
   // Check if entry can be edited (same day only)
@@ -35,11 +43,24 @@ class JournalEntry {
       'winTomorrow': winTomorrow,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
+      'accomplishedPhotos': jsonEncode(accomplishedPhotos),
+      'gratefulPhotos': jsonEncode(gratefulPhotos),
+      'winTomorrowPhotos': jsonEncode(winTomorrowPhotos),
     };
   }
 
   // Create from database map
   factory JournalEntry.fromMap(Map<String, dynamic> map) {
+    List<String> _parsePhotoList(dynamic value) {
+      if (value == null) return [];
+      try {
+        final List<dynamic> decoded = jsonDecode(value as String);
+        return decoded.map((e) => e.toString()).toList();
+      } catch (e) {
+        return [];
+      }
+    }
+
     return JournalEntry(
       id: map['id'] as int?,
       date: DateTime.parse(map['date'] as String),
@@ -50,6 +71,9 @@ class JournalEntry {
       updatedAt: map['updatedAt'] != null
           ? DateTime.parse(map['updatedAt'] as String)
           : null,
+      accomplishedPhotos: _parsePhotoList(map['accomplishedPhotos']),
+      gratefulPhotos: _parsePhotoList(map['gratefulPhotos']),
+      winTomorrowPhotos: _parsePhotoList(map['winTomorrowPhotos']),
     );
   }
 
@@ -62,6 +86,9 @@ class JournalEntry {
     String? winTomorrow,
     DateTime? createdAt,
     DateTime? updatedAt,
+    List<String>? accomplishedPhotos,
+    List<String>? gratefulPhotos,
+    List<String>? winTomorrowPhotos,
   }) {
     return JournalEntry(
       id: id ?? this.id,
@@ -71,6 +98,9 @@ class JournalEntry {
       winTomorrow: winTomorrow ?? this.winTomorrow,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      accomplishedPhotos: accomplishedPhotos ?? this.accomplishedPhotos,
+      gratefulPhotos: gratefulPhotos ?? this.gratefulPhotos,
+      winTomorrowPhotos: winTomorrowPhotos ?? this.winTomorrowPhotos,
     );
   }
 }
